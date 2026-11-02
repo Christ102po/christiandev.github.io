@@ -1,6 +1,0 @@
-<?php
-require dirname(__DIR__).'/includes/bootstrap.php';require_admin();require __DIR__.'/_layout.php';
-$project_count=(int)db()->query('SELECT COUNT(*) FROM projects')->fetchColumn();
-$message_count=(int)db()->query('SELECT COUNT(*) FROM messages')->fetchColumn();
-$unread_count=(int)db()->query('SELECT COUNT(*) FROM messages WHERE is_read=0')->fetchColumn();
-admin_header('Overview');?><div class="stat-grid"><div class="stat-card"><span>TOTAL PROJECTS</span><strong><?= $project_count ?></strong><a href="<?= e(url('admin/projects.php')) ?>">Manage projects →</a></div><div class="stat-card"><span>CONTACT MESSAGES</span><strong><?= $message_count ?></strong><a href="<?= e(url('admin/messages.php')) ?>">View inbox →</a></div><div class="stat-card"><span>UNREAD</span><strong><?= $unread_count ?></strong><a href="<?= e(url('admin/messages.php')) ?>">Read messages →</a></div></div><div class="admin-panel"><h2>Keep your portfolio up to date</h2><p>Add verified project screenshots, describe your own contributions, and set each project's accurate status before sharing with employers.</p><a href="<?= e(url('admin/edit-project.php')) ?>" class="btn btn-primary">+ Add project</a> <a href="<?= e(url('admin/profile.php')) ?>" class="btn btn-outline">Update profile photo</a></div><?php admin_footer(); ?>

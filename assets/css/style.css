@@ -55,3 +55,198 @@
     transform: none;
   }
 }
+
+
+/* Project quick preview — one authoritative implementation, no clipped popovers. */
+.project-grid{align-items:start}
+.project-card{position:relative;overflow:visible;isolation:isolate}
+.project-card:hover,.project-card:focus-within,.project-card.preview-open{z-index:5}
+.project-preview-area{position:relative;display:block;margin:8px 0 14px}
+.project-preview-trigger{display:inline-flex;align-items:center;gap:8px;border:1px solid #3769ab;background:#132945;color:#d7e8ff;font-weight:700;font-size:12px;padding:9px 13px;border-radius:9px;cursor:pointer}
+.project-preview-trigger:hover,.project-preview-trigger:focus-visible{border-color:#83b6ff;background:#1b3970}
+.project-preview-popover{box-sizing:border-box;display:block;position:relative;inset:auto;width:100%;max-height:0;overflow:hidden;visibility:hidden;opacity:0;margin:0;padding:0 16px;border:0 solid #477cbd;border-radius:14px;background:linear-gradient(135deg,#152d51,#0b182b);box-shadow:none;pointer-events:none;transform:translateY(-8px);transition:max-height .28s ease,opacity .22s ease,transform .22s ease,padding .22s ease,margin .22s ease}
+.project-preview-popover h4{font-size:19px;margin:10px 0 7px;color:#f1f6ff}
+.project-preview-popover p{font-size:13px;line-height:1.65;color:#c1d3ed;margin:0 0 12px;overflow-wrap:anywhere}
+.preview-eyebrow{font-size:10px;letter-spacing:.13em;color:#8dbaff;display:flex;justify-content:space-between;gap:8px}
+.preview-eyebrow span{letter-spacing:0;color:#cedcf0}
+.preview-meta{font-size:12px;color:#b7cae5;margin:7px 0;overflow-wrap:anywhere}
+.preview-meta strong{color:#eff5ff}
+.preview-detail-link{display:inline-block;margin-top:11px;color:#91c0ff;font-weight:700;font-size:12px}
+/* Hover works independently of JavaScript. :focus-within enables keyboard users. */
+@media (hover:hover) and (pointer:fine){.project-card:hover .project-preview-popover{visibility:visible;opacity:1;max-height:650px;overflow:visible;margin-top:12px;padding:18px 16px;border-width:1px;box-shadow:0 15px 35px #0008;pointer-events:auto;transform:translateY(0)}}
+.project-card.preview-open .project-preview-popover,.project-card:focus-within .project-preview-popover{visibility:visible;opacity:1;max-height:650px;overflow:visible;margin-top:12px;padding:18px 16px;border-width:1px;box-shadow:0 15px 35px #0008;pointer-events:auto;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.project-preview-popover{transition:none}}
+
+/* Large three-times portrait: 190px -> 570px on desktop, responsive on smaller screens. */
+.hero{grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:24px}
+.hero-visual{height:620px;min-width:0;isolation:isolate}
+.visual-core.has-photo{width:min(570px,100%);height:auto;aspect-ratio:1;max-width:570px;
+  transform:none;z-index:2;position:relative;flex-shrink:0;border-radius:50%}
+.visual-core.has-photo .hero-portrait{width:100%;height:100%;object-fit:cover}
+.hero-visual:has(.has-photo) .visual-orbit{opacity:.35}
+.hero-visual:has(.has-photo) .floating-chip{z-index:4}
+@media(max-width:1000px){
+ .hero{grid-template-columns:1fr 1fr}
+ .hero-visual{height:min(53vw,540px)}
+ .visual-core.has-photo{width:min(100%,435px);height:auto}
+}
+@media(max-width:760px){
+ .hero{grid-template-columns:1fr}
+ .hero-visual{height:min(92vw,520px);max-width:570px}
+ .visual-core.has-photo{width:min(92%,450px);height:auto}
+ .hero-visual:has(.has-photo) .floating-chip{display:none}
+}
+@media(max-width:540px){
+ .hero-visual{height:min(93vw,405px)}
+ .visual-core.has-photo{width:min(93%,351px);height:auto}
+}
+
+/* Responsive refinements — 2026-10-15 */
+html{max-width:100%;overflow-x:clip}
+img,video,svg{max-width:100%}
+img{height:auto}
+.container,.hero-content,.about-grid>*,.contact-grid>*,.detail-grid>*,.section-heading>*,.project-card,.skill-card{min-width:0}
+h1,h2,h3,p,.about-card,.project-card-body{overflow-wrap:anywhere}
+.project-grid,.skills-grid{align-items:stretch}
+.project-card{height:fit-content;min-width:0}
+.project-art{border-radius:17px 17px 0 0}
+.project-preview-trigger{min-height:44px;touch-action:manipulation}
+.project-preview-popover{max-width:100%;overflow-wrap:anywhere}
+/* Always show a preview when keyboard focus reaches the card. */
+.project-card:focus-within{z-index:6}
+.hero-content{position:relative;z-index:2}
+.hero h1{overflow-wrap:normal;word-break:normal}
+.hero-visual{width:100%;max-width:100%}
+.hero-portrait{aspect-ratio:1;object-fit:cover}
+.contact-panel input,.contact-panel textarea,.edit-form input,.edit-form textarea,.edit-form select{max-width:100%;min-width:0}
+.admin-table-wrap{max-width:100%;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch}
+@media(max-width:1100px){
+  .hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .hero h1{font-size:clamp(3.25rem,7vw,6.25rem)}
+  .hero-visual{height:min(54vw,520px)}
+  .hero-visual .visual-core.has-photo{width:min(95%,460px)}
+}
+@media(max-width:860px){
+  .site-nav{gap:12px}
+  .site-nav a{font-size:12px}
+  .header-inner{gap:12px}
+  .skills-grid,.project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .section{padding-block:76px}
+  .project-card-body{padding:20px}
+}
+@media(max-width:760px){
+  .hero{grid-template-columns:minmax(0,1fr);gap:20px;padding-top:55px}
+  .hero-content{text-align:center}
+  .hero .eyebrow,.hero .role-line,.hero-actions,.hero-meta{justify-content:center}
+  .hero-copy{margin-inline:auto}
+  .hero-visual{height:min(90vw,500px);margin:auto}
+  .hero-visual .visual-core.has-photo{width:min(86%,450px)}
+  .section-heading{display:block}
+  .section-heading>p{width:auto;max-width:610px}
+  .about-grid,.contact-grid,.detail-grid{grid-template-columns:minmax(0,1fr)}
+  .admin-top nav{flex-wrap:wrap}
+  .admin-top-inner{gap:15px}
+  .site-nav{max-height:calc(100dvh - 72px);overflow-y:auto}
+  .site-nav a{min-height:44px;display:flex;align-items:center}
+}
+@media(max-width:540px){
+  .container{width:calc(100% - 32px)}
+  .section{padding-block:64px}
+  .hero{padding-top:42px;gap:12px}
+  .hero h1{font-size:clamp(3rem,12.5vw,4.7rem)}
+  .hero-kicker{font-size:15px}
+  .hero-copy{font-size:14px;line-height:1.75}
+  .hero-meta{margin-top:24px;gap:9px}
+  .hero-actions{gap:10px}
+  .hero-actions .btn{width:100%}
+  .hero-visual{height:min(90vw,385px)}
+  .hero-visual .visual-core.has-photo{width:min(87%,340px)}
+  .skills-grid,.project-grid{grid-template-columns:minmax(0,1fr);gap:16px}
+  .skill-card{min-height:auto;padding:23px}
+  .project-card-body{padding:19px}
+  .project-art{height:190px}
+  .section-title{font-size:clamp(2.2rem,10vw,3rem)}
+  .ticker-inner{gap:9px}
+  .about-card{padding:20px;gap:14px}
+  .about-symbol{font-size:46px}
+  .about-facts,.form-row{grid-template-columns:1fr}
+  .contact-panel{padding:18px}
+  .preview-eyebrow{flex-wrap:wrap}
+  .floating-chip{display:none}
+  .footer-social{flex-wrap:wrap;gap:13px}
+  .admin-top nav{justify-content:flex-start}
+  .stat-card strong{font-size:42px}
+}
+@media(max-width:360px){
+  .container{width:calc(100% - 24px)}
+  .brand{font-size:12px;letter-spacing:0}
+  .brand-mark{width:33px;height:33px}
+  .hero h1{font-size:clamp(2.65rem,12vw,3.1rem)}
+  .hero .eyebrow{font-size:9px;letter-spacing:.08em}
+  .project-topline{flex-wrap:wrap}
+  .project-preview-popover{padding-inline:12px!important}
+}
+@media (hover:none), (pointer:coarse){
+  .skill-card:hover,.project-card:hover{transform:none}
+  .cursor-glow,.cursor-ring{display:none!important}
+}
+
+/* V5: a true screen-level project preview; old inline preview stays hidden as a data source. */
+.project-card .project-preview-popover,
+.project-card:hover .project-preview-popover,
+.project-card:focus-within .project-preview-popover,
+.project-card.preview-open .project-preview-popover {
+  display:none!important;
+}
+.project-modal-layer{position:fixed;inset:0;z-index:99990;display:grid;place-items:center;padding:22px;pointer-events:none;visibility:hidden}
+.project-modal-layer.is-open{visibility:visible;pointer-events:auto}
+.project-modal-backdrop{position:absolute;inset:0;background:rgba(2,7,19,.72);backdrop-filter:blur(9px);opacity:0;transition:opacity .42s ease}
+.project-modal-layer.is-open .project-modal-backdrop{opacity:1}
+.project-modal{position:relative;z-index:1;width:min(620px,100%);max-height:min(78vh,720px);overflow:auto;overscroll-behavior:contain;color:#f1f5f9;background:radial-gradient(circle at 20% 0%,#1a4076 0%,#101f38 48%,#081424 100%);border:1px solid #5084c9;box-shadow:0 30px 110px #000e,0 0 65px #2563eb4a;border-radius:50%;padding:clamp(24px,5vw,44px);opacity:0;transform:translateY(70vh) scale(.08);transform-origin:center bottom;transition:transform .66s cubic-bezier(.16,1,.3,1),border-radius .65s cubic-bezier(.16,1,.3,1),opacity .35s ease;will-change:transform,border-radius}
+.project-modal-layer.is-open .project-modal{transform:translateY(0) scale(1);border-radius:28px;opacity:1}
+.project-modal-content{position:relative;z-index:1;overflow-wrap:anywhere}
+.project-modal .preview-eyebrow{display:flex;align-items:center;flex-wrap:wrap;gap:12px;color:#8cbdff;font-size:11px;font-weight:700;letter-spacing:.14em}
+.project-modal .preview-eyebrow span{border:1px solid #3f6594;padding:4px 10px;border-radius:30px;color:#d8e8ff;letter-spacing:0;font-size:11px}
+.project-modal h4{color:white;font:700 clamp(27px,5vw,40px) 'Space Grotesk',sans-serif;line-height:1.12;margin:22px 0 16px}
+.project-modal p{color:#c6d5e9;font-size:15px;line-height:1.8;margin:0 0 22px}
+.project-modal .preview-meta{font-size:14px;color:#bbcee7;padding:10px 0;border-top:1px solid #345276}
+.project-modal .preview-meta strong{color:#f3f7ff}
+.project-modal .preview-detail-link{display:inline-flex;margin-top:20px;padding:13px 19px;background:#2563eb;border-radius:10px;color:#fff;font-size:14px;font-weight:700}
+.project-modal-close{position:sticky;top:0;float:right;z-index:2;display:grid;place-items:center;width:42px;height:42px;border:1px solid #527aad;background:#142c4b;border-radius:50%;color:white;font-size:28px;line-height:1}
+.project-modal-close:hover{background:#28538d}
+@media(max-width:600px){.project-modal-layer{padding:12px}.project-modal{max-height:85dvh;padding:22px;border-radius:30px}.project-modal-layer.is-open .project-modal{border-radius:22px}.project-modal h4{font-size:29px}}
+@media(prefers-reduced-motion:reduce){.project-modal,.project-modal-backdrop{transition:none!important}.project-modal{transform:none;opacity:1}}
+
+/* Static GitHub Pages additions */
+.contact-details{display:flex;flex-direction:column;gap:13px;margin:0 0 24px}.contact-details a{color:#bbd3f7;overflow-wrap:anywhere}.contact-details a:hover{color:#69a4ff}.visual-core.has-photo{width:clamp(185px,24vw,330px);height:clamp(185px,24vw,330px);border-radius:50%;overflow:hidden;transform:none}.hero-portrait{display:block;width:100%;height:100%;object-fit:cover}.contact-social{flex-wrap:wrap}@media(max-width:760px){.visual-core.has-photo{width:220px;height:220px}}@media(max-width:540px){.visual-core.has-photo{width:185px;height:185px}}
+
+/* Actual project imagery bundled locally for static hosting. */
+.project-art .project-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;padding:1.1rem;z-index:1;transition:transform .35s ease;filter:drop-shadow(0 8px 22px rgba(0,0,0,.3))}
+.project-art:hover .project-photo{transform:scale(1.06)}
+.project-art .art-name,.project-art .project-explore{z-index:2}
+
+/* Static contact shortcuts — no form or server required. */
+.connect-panel{padding:30px;display:flex;flex-direction:column;gap:24px;background:linear-gradient(155deg,rgba(21,43,76,.72),rgba(9,21,39,.92));border:1px solid rgba(99,157,255,.24);border-radius:18px;}
+.connect-intro{display:grid;gap:10px}.connect-kicker{font-size:.72rem;letter-spacing:.16em;color:#71a9ff;font-weight:800}.connect-intro h3{font-size:clamp(1.65rem,3vw,2.3rem);line-height:1.15;margin:0;color:#f2f6ff}.connect-intro h3 .dot{color:#5a94ff}.connect-intro p{line-height:1.7;color:#9fb7d9;font-size:.94rem;margin:0;max-width:45ch}.connect-links{display:grid;gap:10px}.connect-link{display:flex;gap:15px;align-items:center;min-width:0;padding:14px 15px;text-decoration:none!important;border:1px solid rgba(99,157,255,.17);background:rgba(6,17,35,.72);border-radius:12px;color:#eff5ff!important;transition:background .2s,border-color .2s,transform .2s}.connect-link:hover,.connect-link:focus-visible{background:rgba(35,89,166,.23);border-color:#5796ff;transform:translateY(-2px)}.connect-icon{display:grid;place-items:center;flex:0 0 43px;height:43px;border-radius:11px;background:rgba(62,124,227,.16);color:#7ab2ff;font-size:1.3rem;font-weight:700}.connect-label{display:flex;flex:1;flex-direction:column;gap:3px;min-width:0}.connect-label strong{font-size:.97rem}.connect-label small{font-size:.78rem;color:#98afd2;overflow-wrap:anywhere}.connect-arrow{color:#7aaeff;font-size:1.3rem}.connect-foot{display:flex;align-items:center;gap:9px;font-size:.78rem;color:#acc3e0}.available-dot{height:8px;width:8px;border-radius:50%;background:#55e6a7;box-shadow:0 0 12px rgba(85,230,167,.5)}@media(max-width:600px){.connect-panel{padding:20px;gap:20px}.connect-link{padding:12px;gap:12px}.connect-icon{flex-basis:39px;height:39px}.connect-label small{font-size:.73rem}}
+
+
+/* Responsive finishing pass: prevent cropping and horizontal overflow */
+html, body {max-width:100%; overflow-x:clip;}
+img, video, svg, canvas {max-width:100%;}
+img {height:auto;}
+.brand-mark {padding:0;overflow:hidden;flex:none;}
+.brand-mark img {display:block;width:100%;height:100%;object-fit:contain;border-radius:9px;}
+.hero, .hero-content, .hero-visual, .about-grid > *, .detail-grid > *, .contact-grid > *, .project-card, .skill-card {min-width:0;}
+.hero h1, .section-title, .detail-heading h1 {overflow-wrap:normal;word-break:normal;}
+/* Contain means the whole photo is always visible, even when its ratio changes. */
+.visual-core.has-photo {overflow:hidden;isolation:isolate;background:#08162d;}
+.visual-core.has-photo .hero-portrait, .hero-portrait {display:block;width:100%;height:100%;object-fit:contain!important;object-position:center;border-radius:50%;}
+.project-art .project-photo, .project-art img, .detail-cover img {object-fit:contain!important;object-position:center!important;}
+.project-art .project-photo {padding:clamp(12px,4%,22px);}
+.detail-cover img {position:relative;inset:auto;height:100%;width:100%;padding:clamp(12px,3vw,30px);}
+.project-card .art-name {max-width:calc(100% - 46px);overflow-wrap:anywhere;font-size:clamp(20px,2.5vw,31px);}
+.floating-chip {max-width:54%;white-space:normal;line-height:1.4;}
+@media (max-width:1100px) {.hero {grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:clamp(18px,3vw,30px)}.hero h1{font-size:clamp(48px,7.5vw,88px)}.site-nav{gap:clamp(10px,1.6vw,24px)}}
+@media (max-width:760px) {.hero{grid-template-columns:minmax(0,1fr);padding-top:55px}.hero h1{font-size:clamp(45px,11vw,78px)}.hero-visual{height:clamp(280px,82vw,420px);max-width:100%;}.visual-core.has-photo{width:clamp(170px,46vw,250px);height:clamp(170px,46vw,250px)}.orbit-outer{width:min(88%,350px)}.orbit-inner{width:min(68%,285px)}.floating-chip{max-width:48%;font-size:clamp(9px,2.2vw,12px)}.chip-top{top:2%;right:0}.chip-bottom{bottom:2%;left:0}.site-nav{max-height:calc(100dvh - 72px);overflow-y:auto}.detail-cover{height:auto;min-height:220px;aspect-ratio:16/10}}
+@media (max-width:540px) {.container{width:calc(100% - 32px)}.brand{font-size:clamp(10px,3vw,14px);gap:8px}.brand-mark{width:36px;height:36px}.hero h1{font-size:clamp(41px,12.7vw,66px);letter-spacing:-.065em}.hero-kicker{font-size:15px}.role-line{font-size:clamp(16px,4.4vw,21px);gap:9px}.hero-visual{height:310px}.visual-core.has-photo{width:clamp(160px,47vw,215px);height:clamp(160px,47vw,215px)}.orbit-outer{width:min(92%,285px)}.orbit-inner{width:min(72%,225px)}.section-title{font-size:clamp(32px,9vw,43px)}.project-art{height:clamp(185px,52vw,260px)}.detail-cover{min-height:190px;aspect-ratio:4/3}.contact-panel,.connect-panel{padding:16px}.connect-link{min-width:0}.hero-meta{margin-top:28px}.floating-chip{max-width:46%}}
+@media (max-width:360px) {.hero h1{font-size:clamp(37px,12.3vw,44px)}.hero-visual{height:270px}.visual-core.has-photo{width:155px;height:155px}.floating-chip{font-size:9px;max-width:45%;padding:6px}.section{padding-block:60px}}

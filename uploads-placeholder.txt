@@ -1,1 +1,0 @@
-The application creates /uploads on the first screenshot upload. Keep PHP execution disabled in /uploads.
